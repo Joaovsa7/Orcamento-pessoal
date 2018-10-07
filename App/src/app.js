@@ -1,3 +1,4 @@
+
 class Despesa {
     constructor(ano, mes, dia, tipo, descricao, valor){
         this.ano = ano
@@ -30,7 +31,7 @@ class Bd {
     }
     salvar(d){
         let id = this.getProximoId()
-        localStorage.setItem('id', JSON.stringify(d))
+        localStorage.setItem(id, JSON.stringify(d))
         localStorage.setItem('id', id)
     }
 }
@@ -56,9 +57,20 @@ function cadastrarDespesa(){
     )
     
     if(despesa.validarDados()){
-        console.log('Dados válidos')    
+        let divTituloModal = document.querySelector('#modalDivTitulo')
+        let tituloModal = document.querySelector('#modalMensagem')
+        let modalDescricao = document.querySelector('.modal-body')
+        let btnModal = document.querySelector('#btn-modal')
+        divTituloModal.classList.replace('text-danger', 'text-success' )
+        tituloModal.innerHTML = "Gravação efetuada com sucesso"
+        modalDescricao.innerHTML = "Um novo registro foi inserido :)"
+        btnModal.classList.replace('btn-danger', 'btn-success' )
+        btnModal.innerHTML = "Voltar"
+
+        bd.salvar(despesa)
+        $('#modalRegistraDespesa').modal('show')
     }
     else{
-        console.log('Dados inválidos')    
+        $('#modalRegistraDespesa').modal('show')
     }
 }
